@@ -2,20 +2,11 @@
 
 # Reset iC880a PIN
 SX1301_RESET_BCM_PIN=17
-SX1301_GPIO_CHIP=4
 
-# Export the GPIO pin on the specified chip
-echo "$SX1301_RESET_BCM_PIN" > /sys/class/gpio/export
-echo "out" > /sys/class/gpio/gpio$SX1301_RESET_BCM_PIN/direction
-echo "0" > /sys/class/gpio/gpio$SX1301_RESET_BCM_PIN/value
-sleep 0.1
-echo "1" > /sys/class/gpio/gpio$SX1301_RESET_BCM_PIN/value
-sleep 0.1
-echo "0" > /sys/class/gpio/gpio$SX1301_RESET_BCM_PIN/value
-sleep 0.1
-
-# Unexport the GPIO pin on the specified chip
-echo "$SX1301_RESET_BCM_PIN" > /sys/class/gpio/gpiochip$SX1301_GPIO_CHIP/unexport
+# Export the GPIO pin
+gpioset gpiochip0 $SX1301_RESET_BCM_PIN=0
+gpioset gpiochip0 $SX1301_RESET_BCM_PIN=1
+gpioset gpiochip0 $SX1301_RESET_BCM_PIN=0
 
 # Run other commands
 ./set_eui.sh
