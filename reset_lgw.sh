@@ -19,22 +19,22 @@ WAIT_GPIO() {
 
 init() {
     # setup GPIOs
-    gpioset gpiochip0 $SX1302_RESET_PIN=0; WAIT_GPIO
+    gpioset gpiochip4 $SX1302_RESET_PIN=0; WAIT_GPIO
 
     # set GPIOs as output
-    gpioset gpiochip0 $SX1302_RESET_PIN=1; WAIT_GPIO
+    gpioset gpiochip4 $SX1302_RESET_PIN=1; WAIT_GPIO
 }
 
 reset() {
     echo "CoreCell reset through GPIO$SX1302_RESET_PIN..."
 
-    gpioset gpiochip0 $SX1302_RESET_PIN=1; WAIT_GPIO
-    gpioset gpiochip0 $SX1302_RESET_PIN=0; WAIT_GPIO
+    gpioset gpiochip4 $SX1302_RESET_PIN=1; WAIT_GPIO
+    gpioset gpiochip4 $SX1302_RESET_PIN=0; WAIT_GPIO
 }
 
 term() {
     # cleanup all GPIOs
-    if [ $(gpioget gpiochip0 $SX1302_RESET_PIN) -eq 1 ]
+    if [ $(gpioget gpiochip4 $SX1302_RESET_PIN) -eq 1 ]
     then
         echo "$SX1302_RESET_PIN" > /sys/class/gpio/unexport; WAIT_GPIO
     fi
