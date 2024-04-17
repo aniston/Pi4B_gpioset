@@ -11,10 +11,10 @@
 # GPIO mapping has to be adapted with HW
 #
 
-SX1302_RESET_PIN=17
+SX1302_RESET_PIN=25
 
 WAIT_GPIO() {
-    sleep 0.1
+    sleep 0.2
 }
 
 init() {
@@ -23,10 +23,14 @@ init() {
 
     # set GPIOs as output
     gpioset gpiochip4 $SX1302_RESET_PIN=1; WAIT_GPIO
+
+    # inform user where this file is
+    echo "using gpioset because of breaking changes in 6.6+ Kernels"
+    echo "init GPIO25 for sx130x on Pi-Hat for RAK2287"
 }
 
 reset() {
-    echo "CoreCell reset through GPIO$SX1302_RESET_PIN..."
+    echo "CoreCell reset through GPIO$SX1302_RESET_PIN"
 
     gpioset gpiochip4 $SX1302_RESET_PIN=1; WAIT_GPIO
     gpioset gpiochip4 $SX1302_RESET_PIN=0; WAIT_GPIO
